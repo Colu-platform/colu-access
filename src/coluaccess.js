@@ -11,35 +11,35 @@ var bitcoin = require('bitcoinjs-lib')
 var User = require('./user.js')
 
 var ColuAccess = function (settings) {
-	var self = this
+  var self = this
 
-	settings = settings || {}
+  settings = settings || {}
 
-	self.companyName = settings.companyName || 'New Company'
+  self.companyName = settings.companyName || 'New Company'
   self.companyIcon = settings.companyIcon
   if (self.companyIcon) {
     self.companyIconMIMEType = settings.companyIconMIMEType || 'image/jpeg'
     self.companyIconDataHash = settings.companyIconDataHash
   }
   self.issuerHomepage = settings.issuerHomepage
-	self.colu = new Colu(settings)
-	self.coluHost = self.colu.coluHost
+  self.colu = new Colu(settings)
+  self.coluHost = self.colu.coluHost
   self.network = self.colu.network
-	self.colu.on('connect', function () {
-		self.emit('connect')
-	})
+  self.colu.on('connect', function () {
+    self.emit('connect')
+  })
 
-	self.colu.on('error', function (err) {
-		self.emit('error', err)
-	}) 
+  self.colu.on('error', function (err) {
+    self.emit('error', err)
+  })
 }
 
 util.inherits(ColuAccess, events.EventEmitter)
 
-ColuAccess.prototype.init = function () {
+ColuAccess.prototype.init = function (cb) {
   var self = this
 
-  self.colu.init()
+  self.colu.init(cb)
 }
 
 ColuAccess.prototype.createRegistrationMessage = function (username, account) {
@@ -103,7 +103,6 @@ ColuAccess.prototype.getRegistrationQR = function (registrationMessage, callback
   )
 }
 
-
 ColuAccess.prototype.registerUser = function (args, callback) {
   var self = this
 
@@ -112,7 +111,7 @@ ColuAccess.prototype.registerUser = function (args, callback) {
   var phonenumber = args.phonenumber
 
   assertRegistrationMessage(registrationMessage)
-  
+
   assert.equal(typeof callback, 'function', 'Need callback function as last argument.')
 
   var user
@@ -144,12 +143,12 @@ ColuAccess.prototype.registerUser = function (args, callback) {
       user = parseRegistrationBody(body)
       if (!user) return cb('Wrong answer from server.')
       var client_public_key = user.getRootPublicKey()
-    	var messageVerified = verifyMessage(registrationMessage, body.verified_client_signature, client_public_key, body.verified, body.client_message_str, self.network)
+      var messageVerified = verifyMessage(registrationMessage, body.verified_client_signature, client_public_key, body.verified, body.client_message_str, self.network)
       if (!messageVerified) return cb('Signature not verified.')
       var username = getUsername(registrationMessage)
       var companyPublicKey = bitcoin.ECPubKey.fromHex(registrationMessage.company_public_key)
-    	var toAddress = user.getAddress()
-    	self.accessIssue(companyPublicKey, toAddress, username, cb)
+      var toAddress = user.getAddress()
+      self.accessIssue(companyPublicKey, toAddress, username, cb)
     },
     function (l_assetInfo, cb) {
       assetInfo = l_assetInfo
@@ -171,9 +170,9 @@ ColuAccess.prototype.registerUser = function (args, callback) {
 }
 
 ColuAccess.prototype.accessIssue = function (publicKey, toAddress, username, callback) {
-	var self = this
+  var self = this
 
-	var args = {
+  var args = {
     issueAddress: publicKey.getAddress(self.network).toString(),
     amount: 1,
     reissueable: true,
@@ -186,7 +185,7 @@ ColuAccess.prototype.accessIssue = function (publicKey, toAddress, username, cal
       urls: [],
       assetName: self.companyName + ' access token',
       issuer: self.companyName,
-      description: 'Access token for user '+username+' to '+self.companyName+'.',
+      description: 'Access token for user ' + username + ' to ' + self.companyName + '.',
       userData: {
         meta: [
           {
@@ -221,7 +220,7 @@ ColuAccess.prototype.accessIssue = function (publicKey, toAddress, username, cal
     })
   }
 
-  self.colu.financedIssue(args, callback)
+  self.colu.issueAsset(args, callback)
 }
 
 ColuAccess.prototype.verifyUser = function (username, assetId, callback) {

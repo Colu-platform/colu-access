@@ -1,10 +1,12 @@
 {
   "name": "colu-access",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Colu access app for registering a user, issue an access token and verify his holding in login.",
   "main": "src/coluaccess.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,16 @@
     "login"
   ],
   "author": "bejavu <tal@colu.co>",
+  "contributors": [
+    {
+      "name": "Eliran Zach",
+      "email": "thehobbit85@gmail.com"
+    },
+    {
+      "name": "bejavu",
+      "email": "tal@colu.co"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Colu-platform/colu-access/issues"
@@ -34,5 +46,9 @@
     "qr-encode": "^0.3.0",
     "request": "^2.60.0",
     "util": "^0.10.3"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "mocha": "^2.2.4"
   }
 }
