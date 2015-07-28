@@ -42,6 +42,8 @@ ColuAccess.prototype.init = function (cb) {
   self.colu.init(cb)
 }
 
+ColuAccess.User = User
+
 ColuAccess.prototype.createRegistrationMessage = function (username, account) {
   var self = this
 
@@ -145,7 +147,7 @@ ColuAccess.prototype.registerUser = function (args, callback) {
       var client_public_key = user.getRootPublicKey()
       var messageVerified = verifyMessage(registrationMessage, body.verified_client_signature, client_public_key, body.verified, body.client_message_str, self.network)
       if (!messageVerified) return cb('Signature not verified.')
-      var username = getUsername(registrationMessage)
+      var username = ColuAccess.getUsername(registrationMessage)
       var companyPublicKey = bitcoin.ECPubKey.fromHex(registrationMessage.company_public_key)
       var toAddress = user.getAddress()
       self.accessIssue(companyPublicKey, toAddress, username, cb)
@@ -253,6 +255,14 @@ ColuAccess.prototype.verifyUser = function (username, assetId, callback) {
   )
 }
 
+ColuAccess.getUsername = function (registrationMessage) {
+  assertRegistrationMessage(registrationMessage)
+  var message = registrationMessage.message
+  message = JSON.parse(message)
+  var username = message.username
+  return username
+}
+
 var verifyMessage = function (registrationMessage, clientSignature, clientPublicKey, verified, clientMessageStr, network) {
   var message = registrationMessage.message
   var signature = registrationMessage.signature
@@ -289,14 +299,6 @@ var parseRegistrationBody = function (body) {
     return new User(body.extended_public_key)
   }
   return null
-}
-
-var getUsername = function (registrationMessage) {
-  assertRegistrationMessage(registrationMessage)
-  var message = registrationMessage.message
-  message = JSON.parse(message)
-  var username = message.username
-  return username
 }
 
 var assertRegistrationMessage = function (registrationMessage) {
