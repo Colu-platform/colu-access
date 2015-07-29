@@ -1,6 +1,7 @@
 var ColoAccess = require('../src/coluaccess.js')
 
 var settings = {
+  coluHost: 'https://dev.engine.colu.co',
   network: 'testnet',
   privateSeed: 'c507290be50bca9b887af39019f80e3f9f27e4020ee0a4fe51595ee4424d6151',
   companyName: 'My company'
@@ -9,11 +10,10 @@ var settings = {
 var coluAccess = new ColoAccess(settings)
 
 coluAccess.on('connect', function () {
-
   // This is your private seed, keep it safe!!!
   console.log('seed: ' + coluAccess.colu.hdwallet.getPrivateSeed())
 
-  var assetId = 'U9SPMUfd8ESC9ncYy9EWL2Dh2Z2eKfbM4Qmyw'
+  var assetId = 'U3UoPr9u9cmGqtB8JaXFfMJqRACUDHAEvH4nm'
   var username = 'bobicbob30'
 
   coluAccess.verifyUser(username, assetId, function (err, data) {

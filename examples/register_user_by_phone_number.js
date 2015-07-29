@@ -9,14 +9,12 @@ var settings = {
 var coluAccess = new ColoAccess(settings)
 
 coluAccess.on('connect', function () {
-
   // This is your private seed, keep it safe!!!
   console.log('seed: ' + coluAccess.colu.hdwallet.getPrivateSeed())
 
   var phonenumber = '+1234567890'
   var username = 'bobicbob30'
   var registrationMessage = coluAccess.createRegistrationMessage(username)
-
 
   coluAccess.registerUser({registrationMessage: registrationMessage, phonenumber: phonenumber}, function (err, data) {
     if (err) return console.log('Error: ' + JSON.stringify(err))
