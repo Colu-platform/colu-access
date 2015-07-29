@@ -1,6 +1,6 @@
 {
   "name": "colu-access",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Colu access app for registering a user, issue an access token and verify his holding in login.",
   "main": "src/coluaccess.js",
   "scripts": {
