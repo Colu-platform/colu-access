@@ -1,6 +1,6 @@
 {
   "name": "colu-access",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Colu access app for registering a user, issue an access token and verify his holding in login.",
   "main": "src/coluaccess.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "assert": "^1.3.0",
     "async": "^1.4.0",
     "bitcoinjs-lib": "^1.5.7",
-    "colu": "^0.3.13",
+    "colu": "0.4.1",
     "crypto": "0.0.3",
     "events": "^1.0.2",
     "qr-encode": "^0.3.0",
