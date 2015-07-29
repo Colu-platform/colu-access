@@ -38,8 +38,10 @@ util.inherits(ColuAccess, events.EventEmitter)
 
 ColuAccess.prototype.init = function (cb) {
   var self = this
-
-  self.colu.init(cb)
+  self.colu.init(function (err, coluInstance) {
+    if (err) return cb(err)
+    cb(null, self)
+  })
 }
 
 ColuAccess.User = User
