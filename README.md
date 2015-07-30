@@ -14,6 +14,7 @@ $ npm i colu-access
 var ColuAccess = require('colu-access')
 
 var coluAccess = new ColuAccess({
+    apiKey: 'mandatory if in mainnet',
     companyName: 'optional',
     companyIcon: 'optional',
     companyIconMIMEType: 'optional',
