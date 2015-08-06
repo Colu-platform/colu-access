@@ -2,7 +2,6 @@ var fs = require('fs')
 var ColoAccess = require('../src/coluaccess.js')
 
 var settings = {
-  network: 'mainnet',
   privateSeed: 'c507290be50bca9b887af39019f80e3f9f27e4020ee0a4fe51595ee4424d6151',
   companyName: 'My company'
 }

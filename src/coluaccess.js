@@ -90,7 +90,7 @@ ColuAccess.prototype.getRegistrationQR = function (registrationMessage, callback
   assert.equal(typeof callback, 'function', 'Need callback function as last (second) argument.')
   registrationMessage.by_code = true
   request.post(self.coluHost + '/start_user_registration_to_company',
-    {form: registrationMessage },
+    {json: registrationMessage },
     function (err, response, body) {
       if (err) {
         return callback(err)
@@ -98,7 +98,6 @@ ColuAccess.prototype.getRegistrationQR = function (registrationMessage, callback
       if (response.statusCode !== 200) {
         return callback(body)
       }
-      body = JSON.parse(body)
       if ('code' in body) {
         var simpleQrLink = self.coluHost + '/qr?code=' + body.code
         var dataURI = qr(simpleQrLink, {type: 5, size: 5, level: 'M'})
@@ -126,19 +125,19 @@ ColuAccess.prototype.registerUser = function (args, callback) {
   async.waterfall([
     function (cb) {
       var url = self.coluHost + '/start_user_registration_to_company'
-      var form
+      var json
       if (code) {
         url = url + '_by_code'
-        form = {code: code}
+        json = {code: code}
       } else {
         if (phonenumber) {
           registrationMessage.phonenumber = phonenumber
         }
-        form = registrationMessage
+        json = registrationMessage
       }
       request.post(
         url,
-        {form: form},
+        {json: json},
         cb
       )
     },
@@ -146,7 +145,6 @@ ColuAccess.prototype.registerUser = function (args, callback) {
       if (response.statusCode !== 200) {
         return cb(new Error(body))
       }
-      body = JSON.parse(body)
       user = parseRegistrationBody(body)
       if (!user) return cb('Wrong answer from server.')
       var client_public_key = user.getRootPublicKey()
@@ -163,7 +161,7 @@ ColuAccess.prototype.registerUser = function (args, callback) {
       var url = self.coluHost + '/finish_registration_to_company'
       request.post(
         url,
-        {form: {asset_data: assetInfo}},
+        {json: {asset_data: assetInfo}},
         cb
       )
     }
@@ -240,7 +238,7 @@ ColuAccess.prototype.verifyUser = function (username, assetId, callback) {
   var data_params = self.createRegistrationMessage(username)
   data_params.asset_id = assetId
   request.post(self.coluHost + '/verify_asset_holdings',
-    {form: data_params },
+    {json: data_params },
     function (err, response, body) {
       if (err) {
         return callback(err)
@@ -248,7 +246,6 @@ ColuAccess.prototype.verifyUser = function (username, assetId, callback) {
       if (response.statusCode !== 200) {
         return callback(body)
       }
-      body = JSON.parse(body)
       assert('client_public_key' in body, 'No client_public_key return from server.')
       assert('verified_client_signature' in body, 'No verified_client_signature return from server.')
       if (verifyMessage(data_params, body.verified_client_signature, body.client_public_key, body.verified, body.client_message_str)) {
