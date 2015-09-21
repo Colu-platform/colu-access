@@ -9,39 +9,19 @@
 $ npm i colu-access
 ```
 
+## Using
 
-### Constructor
+### Installation
 
-```js
-var ColuAccess = require('colu-access')
-
-var coluAccess = new ColuAccess({
-    apiKey: 'mandatory if in mainnet',
-    companyName: 'optional',
-    companyIcon: 'optional',
-    companyIconMIMEType: 'optional',
-    companyIconDataHash: 'optional',
-    issuerHomepage: 'optional',
-    coloredCoinsHost: 'optional',
-    coluHost: 'optional',
-    redisPort: 'optional',
-    redisHost: 'optional',
-    network:: 'optional',
-    privateSeed: 'optional'
-})
+```sh
+$ npm i colu
 ```
 
-### API's
+### Documentation 
 
-```js
-ColuAccess.prototype.init(cb)
-ColuAccess.prototype.createRegistrationMessage(username, account)
-ColuAccess.prototype.createRegistrationQR(registrationMessage)
-ColuAccess.prototype.getRegistrationQR(registrationMessage, callback)
-ColuAccess.prototype.registerUser(args, callback)
-ColuAccess.prototype.accessIssue(publicKey, toAddress, username, callback)
-ColuAccess.prototype.verifyUser(username, assetId, callback)
-```
+Full documentation for this Module can be found here: [http://documentation.colu.co/](http://documentation.colu.co/#2.AccessSDK)
+
+## Developing
 
 ### Testing
 
