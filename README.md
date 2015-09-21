@@ -8,7 +8,7 @@
 ### Installation
 
 ```sh
-$ npm i colu
+$ npm i colu-access
 ```
 
 ### Documentation 
