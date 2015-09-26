@@ -3,45 +3,19 @@
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
+## Using
+
 ### Installation
 
 ```sh
 $ npm i colu-access
 ```
 
+### Documentation 
 
-### Constructor
+Full documentation for this Module can be found here: [http://documentation.colu.co/](http://documentation.colu.co/#2.AccessSDK)
 
-```js
-var ColuAccess = require('colu-access')
-
-var coluAccess = new ColuAccess({
-    apiKey: 'mandatory if in mainnet',
-    companyName: 'optional',
-    companyIcon: 'optional',
-    companyIconMIMEType: 'optional',
-    companyIconDataHash: 'optional',
-    issuerHomepage: 'optional',
-    coloredCoinsHost: 'optional',
-    coluHost: 'optional',
-    redisPort: 'optional',
-    redisHost: 'optional',
-    network:: 'optional',
-    privateSeed: 'optional'
-})
-```
-
-### API's
-
-```js
-ColuAccess.prototype.init(cb)
-ColuAccess.prototype.createRegistrationMessage(username, account)
-ColuAccess.prototype.createRegistrationQR(registrationMessage)
-ColuAccess.prototype.getRegistrationQR(registrationMessage, callback)
-ColuAccess.prototype.registerUser(args, callback)
-ColuAccess.prototype.accessIssue(publicKey, toAddress, username, callback)
-ColuAccess.prototype.verifyUser(username, assetId, callback)
-```
+## Developing
 
 ### Testing
 
