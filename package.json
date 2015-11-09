@@ -39,7 +39,7 @@
   "dependencies": {
     "assert": "^1.3.0",
     "async": "^1.4.0",
-    "bitcoinjs-lib": "git+https://git@github.com/Colu-platform/bitcoinjs-lib.git#1.5.x",
+    "bitcoinjs-lib": "~1.5.8",
     "colu": "^0.6.11",
     "crypto": "0.0.3",
     "events": "^1.0.2",
